@@ -15,3 +15,18 @@
 存在问题：
 不能关系重叠问题，比如一个实体存在于多种关系中的情况。这是一个致命的bug。
 
++ Extracting Multiple-Relations in One-Pass with Pre-Trained Transformers
+
+pipline模式，实体是事先给出的，这里可以允许识别多个关系，可以使用one-pass预测出所有的关系
+
+简单来说，将实体对进行拼接，然后接入全连接层进行关系识别，同时提出entity-aware的技巧，
+
+不过这里能够识别的最多的关系是提前给定的，超过的就不能识别了
+
++ Joint Extraction of Entities and Overlapping Relations Using Position-Attentive Sequence Labeling
+
+这个框架也是联合框架，最终是给每个位置建立了一个标注结构，每个标注结构代表了一个位置，比如某个位置有实体，那么该位置会有BIO标注，同时其余位置与其有关系的实体也有BIO标注，与该位置实体没关系的不会给出。
+
+其具体结构如下：
+
+首先使用RNNs去获取每个位置的表征，这里也加入了cha-level级别的表征，然后再表征的基础上增加了一个 position-aware 的attention去给各位置进行表征。
